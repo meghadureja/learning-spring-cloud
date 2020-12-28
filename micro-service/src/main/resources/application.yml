@@ -1,0 +1,20 @@
+server:
+  #port: 9098
+  port: ${PORT:0}
+
+eureka: #tells about the Eureka server details and its refresh time
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}} #allows to run multiple instances of one service on a same host
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+
+spring:
+  application:
+    name: micro-service #current service name to be used by the eureka server

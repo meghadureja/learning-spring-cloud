@@ -1,0 +1,29 @@
+# gateway server
+server:
+  port: 8762
+
+spring:
+  application:
+    name: gateway-service
+
+# zuul routes
+zuul:
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  ignoredServices: '*'
+  routes:
+    recommendation-service:
+      path: /resource/**
+      serviceId: recommendation-service # route all traffic to the actual service server
+      stripPrefix: true
+
+# fetch the registry entries to route the requests to backend APIs
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    hostname: localhost
